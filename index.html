@@ -1718,19 +1718,33 @@ function buildLogoMarquee(){
   if(!imgs.length) return;
   const itemHTML = i => `<span class="lm-item"><img src="${i.getAttribute('src')}"${i.classList.contains('tall')?' class="tall"':''} alt=""></span>`;
   const unit = imgs.map(itemHTML).join('');
+  const PX_PER_SEC = 40; // constant scroll speed (px/sec) on every screen size — tweak to taste
   function fill(){
     // build one group, then repeat the logo set until it comfortably exceeds the viewport
     track.innerHTML = '<div class="lm-group">'+unit+'</div>';
     const g = track.firstElementChild;
     let guard = 0;
     while(g.scrollWidth < window.innerWidth + 140 && guard < 12){ g.insertAdjacentHTML('beforeend', unit); guard++; }
+    const groupWidth = g.scrollWidth;
     // duplicate the (now wide-enough) group so the -50% scroll loops seamlessly
     track.insertAdjacentHTML('beforeend', '<div class="lm-group">'+g.innerHTML+'</div>');
+    // The keyframe travels exactly one group width (-50% of the two-group track).
+    // Derive the duration from that pixel distance so a phone (short strip) and a
+    // desktop (long strip) scroll at the SAME visual speed instead of the phone crawling.
+    if(groupWidth > 0) track.style.setProperty('--lm-dur', (groupWidth / PX_PER_SEC) + 's');
   }
   fill();
-  // images may still be decoding on first paint; re-measure once loaded, and on resize
+  // images may still be decoding on first paint; re-measure once loaded
   window.addEventListener('load', fill, {once:true});
-  let rt; window.addEventListener('resize', ()=>{ clearTimeout(rt); rt=setTimeout(fill, 250); });
+  // Only rebuild when the WIDTH actually changes. On mobile, scrolling shows/hides the
+  // address bar, which fires resize with a new height on every scroll — rebuilding then
+  // would collapse the strip and make the logos jump/stutter. Height-only changes are ignored.
+  let rt, lastW = window.innerWidth;
+  window.addEventListener('resize', ()=>{
+    if(window.innerWidth === lastW) return;
+    lastW = window.innerWidth;
+    clearTimeout(rt); rt = setTimeout(fill, 250);
+  });
 }
 buildLogoMarquee();
 
