@@ -93,7 +93,7 @@ img{display:block;max-width:100%}
 .mobile-menu .btn{margin-top:12px;border-bottom:0}
 
 /* ---------- hero ---------- */
-.hero{position:relative;padding:148px 0 38px;text-align:left}
+.hero{position:relative;padding:24px 0 38px;text-align:left}
 .hero h1{font-family:var(--display);font-weight:820;font-stretch:116%;font-size:clamp(42px,5.6vw,76px);line-height:.99;letter-spacing:-.022em;text-transform:uppercase;max-width:18ch;margin-top:22px}
 .hero h1 .org{color:var(--orange)}
 .hero-sub{margin-top:22px;font-size:17.5px;line-height:1.65;color:var(--text2);max-width:60ch}
@@ -616,7 +616,7 @@ input.err,.nf-row.err{animation:shake .4s}
 .tw-id b{display:block;font-size:11.5px;font-weight:650;letter-spacing:-.005em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tw-id span{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--text3)}
 .tw-time{margin-left:auto;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--text3);flex:none}
-.tw-body{font-size:12.5px;line-height:1.55;color:var(--text2)}
+.tw-body{font-size:12.5px;line-height:1.55;color:var(--text2);overflow-wrap:anywhere;word-break:break-word}
 .tw-card:hover .tw-body{color:var(--text)}
 .tw-body.long{font-size:13px;-webkit-line-clamp:6;line-height:1.6}
 .tw-body{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
@@ -935,7 +935,7 @@ input.err,.nf-row.err{animation:shake .4s}
   .nav-cta .fdn-link{display:none}
   .nav-burger{display:flex}
   .section{padding:42px 0}
-  .hero{padding:122px 0 28px}
+  .hero{padding:18px 0 28px}
   .statgrid{grid-template-columns:1fr}
   .stat.herd{grid-column:auto}
   .news-card{padding:42px 26px}
@@ -973,6 +973,86 @@ input.err,.nf-row.err{animation:shake .4s}
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
   .rv{opacity:1;transform:none}
 }
+
+/* ============================================================
+   ARTICLE HUB · "The Reading Room" (public, guest-friendly)
+============================================================ */
+.art-tabs{display:flex;gap:5px;background:var(--bg2);border:1px solid var(--line);border-radius:13px;padding:5px;margin-top:24px;flex-wrap:wrap}
+.art-tab{flex:1 1 150px;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:11px 17px;border-radius:9px;color:var(--text3);transition:.18s var(--ease);text-align:left;position:relative;min-width:0}
+.art-tab b{font-family:var(--display);font-weight:730;font-stretch:112%;font-size:15px;letter-spacing:.004em;color:inherit;white-space:nowrap}
+.art-tab i{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:var(--text3);opacity:.9}
+.art-tab:hover{color:var(--text2)}
+.art-tab.on{background:var(--card);color:var(--text);box-shadow:var(--shadow-sm)}
+.art-tab.on i{color:var(--orange2)}
+
+.art-source{display:flex;align-items:flex-start;gap:18px;border:1px solid var(--line);background:linear-gradient(180deg,var(--bg2),var(--card));border-radius:var(--r);padding:21px 23px;margin:24px 0 18px;animation:viewin .35s var(--ease)}
+.art-av{width:56px;height:56px;border-radius:15px;flex:none;display:flex;align-items:center;justify-content:center;font-size:26px;background:var(--orange-soft);border:1px solid rgba(255,98,0,.3)}
+.art-si{flex:1;min-width:0}
+.art-si .nm{font-family:var(--display);font-weight:810;font-stretch:114%;font-size:21px;letter-spacing:-.014em;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.art-si .hd{font-family:var(--mono);font-size:11.5px;color:var(--orange2);margin-top:3px}
+.art-si p{font-size:13.5px;color:var(--text2);line-height:1.62;margin-top:9px;max-width:68ch}
+.art-follow{flex:none;align-self:center;white-space:nowrap}
+.art-follow svg{width:14px;height:14px;fill:currentColor}
+
+.art-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.art-card{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:25px;transition:transform .25s var(--ease),box-shadow .25s,border-color .25s;overflow:hidden;animation:viewin .45s var(--ease) backwards}
+.art-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-sm);border-color:var(--line2)}
+.ac-kick{display:flex;align-items:center;gap:11px;margin-bottom:15px}
+.ac-num{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--text3)}
+.art-card h4{font-family:var(--display);font-weight:800;font-stretch:113%;font-size:21px;line-height:1.13;letter-spacing:-.016em}
+.art-card p{font-size:14px;color:var(--text2);line-height:1.66;margin-top:11px;flex:1}
+.art-meta{display:flex;align-items:center;gap:10px;margin-top:19px;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--text3);flex-wrap:wrap}
+.art-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--line2);flex:none}
+.art-read{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-family:var(--body);font-size:13px;font-weight:650;color:var(--orange2);letter-spacing:0}
+.art-read svg{width:12px;height:12px;fill:currentColor}
+.art-card:hover .art-read .arr{transform:translateX(3px)}
+.art-read .arr{transition:transform .18s var(--ease)}
+
+.art-card.lead{grid-column:span 2;flex-direction:row;gap:0;padding:0;border-color:rgba(255,98,0,.42);background:linear-gradient(115deg,#FFF3E9,var(--card) 58%)}
+.art-lead-vis{flex:none;width:174px;background:linear-gradient(165deg,var(--orange),#E5560B);color:#fff;position:relative;display:flex;flex-direction:column;justify-content:space-between;padding:23px 21px;overflow:hidden}
+.art-lead-vis::after{content:"";position:absolute;right:-52px;bottom:-52px;width:152px;height:152px;border-radius:50%;background:rgba(255,255,255,.12)}
+.alv-k{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;opacity:.92;position:relative;z-index:1}
+.alv-n{font-family:var(--display);font-weight:850;font-stretch:118%;font-size:62px;line-height:.9;letter-spacing:-.03em;position:relative;z-index:1}
+.alv-m{font-size:31px;position:relative;z-index:1;line-height:1}
+.art-lead-body{flex:1;min-width:0;padding:25px 27px;display:flex;flex-direction:column}
+.art-lead-body h4{font-size:27px;line-height:1.07}
+.art-lead-body p{font-size:14.5px;max-width:64ch}
+
+@media(max-width:1080px){
+  .art-grid{grid-template-columns:1fr}
+  .art-card.lead{grid-column:auto;flex-direction:column}
+  .art-lead-vis{width:auto;flex-direction:row;align-items:center;gap:16px;padding:16px 22px}
+  .art-lead-vis::after{display:none}
+  .alv-n{font-size:42px}
+  .alv-m{margin-left:auto}
+  .art-lead-body h4{font-size:24px}
+}
+@media(max-width:760px){
+  .art-source{flex-direction:column;gap:14px}
+  .art-follow{align-self:flex-start}
+  .art-tab{flex-basis:100%}
+}
+/* ── FEATURED MEMBER LOGO MARQUEE · top of homepage ───────────── */
+/* homepage clears the fixed 72px nav via padding (so the marquee's margin can't collapse and slide under the nav) */
+#page-home{padding-top:76px}
+.logomarq{position:relative;overflow:hidden;background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.lm-track{display:flex;width:max-content;animation:lmscroll var(--lm-dur,55s) linear infinite;will-change:transform}
+.logomarq:hover .lm-track{animation-play-state:paused}
+.lm-group{display:flex;flex:none;align-items:center}
+.lm-item{flex:none;display:flex;align-items:center;justify-content:center;padding:0 32px}
+.lm-item img{height:26px;width:auto;max-width:none;filter:brightness(0);opacity:.5;transition:opacity .2s}
+.lm-item img.tall{height:31px}
+.lm-item:hover img{opacity:.92}
+@keyframes lmscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (max-width:760px){
+  .logomarq{padding:13px 0}
+  .lm-item{padding:0 21px}
+  .lm-item img{height:21px}
+  .lm-item img.tall{height:25px}
+}
+@media (prefers-reduced-motion:reduce){ .lm-track{animation:none} }
 </style>
 </head>
 <body>
@@ -987,6 +1067,7 @@ input.err,.nf-row.err{animation:shake .4s}
         <span>WALLY DAO</span>
       </button>
       <div class="nav-cta">
+        <button class="fdn-link" onclick="openArticlesFrom('home')">Articles</button>
         <button class="fdn-link" id="fdnLink" onclick="showPage('foundation')">Created &amp; managed by the RWA Foundation</button>
         <button class="btn btn-orange btn-sm" onclick="openConnect()">Login</button>
         <button class="nav-burger" aria-label="Menu" onclick="document.getElementById('mmenu').classList.toggle('open')">
@@ -996,12 +1077,19 @@ input.err,.nf-row.err{animation:shake .4s}
     </div>
   </nav>
   <div class="mobile-menu" id="mmenu">
+    <button onclick="mm();openArticlesFrom('home')">Articles</button>
+    <button onclick="mm();openEcoFrom('home')">Ecosystem</button>
     <button class="fdn-link" onclick="showPage('foundation')">Created &amp; managed by the RWA Foundation</button>
     <button class="btn btn-orange" onclick="mm();openConnect()">Login</button>
   </div>
 
   <!-- ================= PAGE: HOME ================= -->
   <main id="page-home">
+
+    <!-- FEATURED MEMBER LOGO MARQUEE (first thing on the page, above the slogan) -->
+    <section class="logomarq" aria-label="Featured member companies">
+      <div class="lm-track" id="logoMarqTrack"></div>
+    </section>
 
     <!-- HERO -->
     <header class="hero" id="top">
@@ -1125,7 +1213,7 @@ input.err,.nf-row.err{animation:shake .4s}
         <div class="daogrid">
           <div class="daob rv">
             <h5><span class="k">01</span>What it is</h5>
-            <p>The first decentralized community for crypto natives in the Real-World-Asset movement. A community-governed onchain treasury — its own assets, directed by <b>$WALLY</b> holders — supports the mission over time, and the Foundation charges no fee and holds no claim on it — transparently, onchain.</p>
+            <p>WALLY DAO is the first community built for people in crypto who care about Real World Assets. It runs its own treasury onchain, made up of assets that <b>$WALLY</b> holders vote on together. That treasury funds the mission over time. The Foundation takes no fee and owns no part of it, and all of it stays visible onchain.</p>
           </div>
           <div class="daob rv d1">
             <h5><span class="k">02</span>WALLY Holder Benefits</h5>
@@ -1283,6 +1371,29 @@ input.err,.nf-row.err{animation:shake .4s}
     </section>
   </main>
 
+  <!-- ================= PAGE: ARTICLE HUB · The Reading Room (public, guest-friendly) ================= -->
+  <main id="page-articles" hidden>
+    <div class="eco-pagehead">
+      <div class="wrap">
+        <button class="eco-back" onclick="articlesBack()"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg><span id="artBackLbl">Back to home</span></button>
+        <div class="eco-ph-row">
+          <div>
+            <span class="eyebrow">The WALLY article hub</span>
+            <h1>The Reading Room</h1>
+            <p class="eco-sub">Long-form writing from across the herd — official briefings from the RWA Foundation, community dispatches from WALLY DAO, and sharp takes from Zeus.</p>
+          </div>
+        </div>
+        <div class="art-tabs" id="artTabs"></div>
+      </div>
+    </div>
+    <section class="section" style="padding-top:18px;padding-bottom:90px">
+      <div class="wrap">
+        <div id="artSource"></div>
+        <div id="artList"></div>
+      </div>
+    </section>
+  </main>
+
   <!-- ====================================================== FOOTER (shared) -->
   <footer>
     <div class="wrap">
@@ -1296,7 +1407,7 @@ input.err,.nf-row.err{animation:shake .4s}
             <button class="btn btn-ghost btn-sm mk-btn" onclick="toast('Media kit','Logos, brand colors and press assets — downloadable at launch.')">Media kit</button>
           </div>
         </div>
-        <div class="ft-col"><h6>Explore</h6><button onclick="openEcoFrom('home')">Ecosystem</button><button onclick="nav('#news')">Newsletter</button><button onclick="openConnect()">Login</button><button onclick="openWallyGame()">Wally Game <span class="ft-badge">PLAY</span></button></div>
+        <div class="ft-col"><h6>Explore</h6><button onclick="openArticlesFrom('home')">Article Hub</button><button onclick="openEcoFrom('home')">Ecosystem</button><button onclick="nav('#news')">Newsletter</button><button onclick="openConnect()">Login</button><button onclick="openWallyGame()">Wally Game <span class="ft-badge">PLAY</span></button></div>
         <div class="ft-col"><h6>The DAO</h6><button onclick="nav('#dao')">About WALLY DAO</button><button onclick="nav('#dao')">Member benefits</button><button onclick="nav('#dao')">Grant program</button><button onclick="toast('Whitepaper','Drops with TGE — join the Herd to get it first.')">Whitepaper</button></div>
         <div class="ft-col"><h6>Foundation</h6><button onclick="showPage('foundation')">About the Foundation</button><button onclick="showPage('foundation','#fdn-members')">Our members</button><button onclick="showPage('foundation','#fdn-principles')">Principles</button></div>
       </div>
@@ -1324,6 +1435,7 @@ input.err,.nf-row.err{animation:shake .4s}
       <button class="sb-link" data-view="perks" onclick="showView('perks')"><svg viewBox="0 0 24 24"><path d="M12 3l1.9 4.7 4.9 1.4-4 3.2 1.2 5L12 14.8 8 17.3l1.2-5-4-3.2 4.9-1.4z"/><path d="M19 4.5l.7 1.7 1.8.5-1.5 1.2.4 1.9-1.4-.9-1.4.9.4-1.9-1.5-1.2 1.8-.5z"/></svg>Perks</button>
       <button class="sb-link" data-view="learnApp" onclick="showView('learnApp')"><svg viewBox="0 0 24 24"><path d="M12 4L2 9l10 5 10-5z"/><path d="M6 11.3V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.7"/></svg>Learn<span class="bdg grn">EARN</span></button>
       <button class="sb-link" onclick="openEcoFrom('app')"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.4"/><circle cx="5" cy="17" r="2.4"/><circle cx="19" cy="17" r="2.4"/><circle cx="12" cy="13" r="1.6"/><path d="M12 7.4v4M10.8 14.2L6.6 15.6M13.2 14.2l4.2 1.4"/></svg>Ecosystem</button>
+      <button class="sb-link" onclick="openArticlesFrom('app')"><svg viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15.5a1.5 1.5 0 0 0-1.5-1.5H4z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15.5a1.5 1.5 0 0 1 1.5-1.5H20z"/></svg>Reading Room</button>
       <span class="sb-label">Account</span>
       <button class="sb-link" data-view="profile" onclick="showView('profile')"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-3.8 4.2-6 8-6s6.8 2.2 8 6"/></svg>Profile &amp; Wallets</button>
       <div class="sb-x">
@@ -1598,6 +1710,30 @@ addEventListener('scroll', ()=> $('#nav').classList.toggle('scrolled', scrollY>2
 const io = new IntersectionObserver(es=>es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } }), {threshold:.15});
 $$('.rv').forEach(el=>io.observe(el));
 
+/* ---------- featured-member logo marquee (top of homepage) ---------- */
+function buildLogoMarquee(){
+  const track = document.getElementById('logoMarqTrack');
+  if(!track) return;
+  const imgs = [...document.querySelectorAll('#page-foundation .logowall .lw-grid:not(.lw-more) .lw-tile img')];
+  if(!imgs.length) return;
+  const itemHTML = i => `<span class="lm-item"><img src="${i.getAttribute('src')}"${i.classList.contains('tall')?' class="tall"':''} alt=""></span>`;
+  const unit = imgs.map(itemHTML).join('');
+  function fill(){
+    // build one group, then repeat the logo set until it comfortably exceeds the viewport
+    track.innerHTML = '<div class="lm-group">'+unit+'</div>';
+    const g = track.firstElementChild;
+    let guard = 0;
+    while(g.scrollWidth < window.innerWidth + 140 && guard < 12){ g.insertAdjacentHTML('beforeend', unit); guard++; }
+    // duplicate the (now wide-enough) group so the -50% scroll loops seamlessly
+    track.insertAdjacentHTML('beforeend', '<div class="lm-group">'+g.innerHTML+'</div>');
+  }
+  fill();
+  // images may still be decoding on first paint; re-measure once loaded, and on resize
+  window.addEventListener('load', fill, {once:true});
+  let rt; window.addEventListener('resize', ()=>{ clearTimeout(rt); rt=setTimeout(fill, 250); });
+}
+buildLogoMarquee();
+
 function countUp(el){
   const raw = el.dataset.count, target = parseFloat(raw);
   const dec = el.dataset.int ? 0 : (raw.split('.')[1]||'').length;
@@ -1724,6 +1860,18 @@ const TW_ILLU={
   vote:'<svg class="tw-illu" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice"><rect width="320" height="180" fill="#F4F1EA"/><rect x="40" y="96" width="46" height="54" rx="5" fill="#0E9F6E"/><rect x="104" y="64" width="46" height="86" rx="5" fill="#FF6200"/><rect x="168" y="110" width="46" height="40" rx="5" fill="#B7791F"/><rect x="232" y="84" width="46" height="66" rx="5" fill="#6D5BD0"/><text x="24" y="34" font-family="ui-monospace,monospace" font-size="12" fill="#6B6357" font-weight="700">WIP-07 · GOVERNANCE</text></svg>',
 };
 const TW={i:0,timer:null,paused:false};
+/* Universal, screen-size-independent truncation: cap the tweet body at a fixed
+   character count and append a real ellipsis. Keeps every card the same rough
+   height across mobile/desktop so the slider never jumps or overflows. Tweets
+   with media get a tighter cap since the image eats vertical space. */
+const TW_MAX_TEXT=180, TW_MAX_MEDIA=116;
+function twTrim(text, max){
+  if(!text || text.length<=max) return text||'';
+  let s=text.slice(0, max);
+  const sp=s.lastIndexOf(' ');
+  if(sp>max*0.6) s=s.slice(0, sp);            // prefer a clean word boundary
+  return s.replace(/[\s.,;:!?…—–-]+$/,'')+'…'; // trim trailing punctuation, then add …
+}
 function twRender(dir){
   const vp=document.getElementById('twViewport'); if(!vp) return;
   const t=TWEETS[TW.i], hasMedia=!!t.media;
@@ -1733,7 +1881,7 @@ function twRender(dir){
       <span class="tw-id"><b>RWA Foundation</b><span>@RWAFoundation_</span></span>
       <span class="tw-time">${t.t}</span>
     </div>
-    <div class="tw-body ${hasMedia?'':'long'}">${t.body}</div>
+    <div class="tw-body ${hasMedia?'':'long'}">${twTrim(t.body, hasMedia?TW_MAX_MEDIA:TW_MAX_TEXT)}</div>
     ${hasMedia?`<div class="tw-media">${TW_ILLU[t.media]||''}</div>`:''}
     <div class="tw-stats"><span><b>${t.rt}</b> Reposts</span><span><b>${t.likes}</b> Likes</span></div>
   </a>`;
@@ -2202,7 +2350,10 @@ function renderLearn(){
       </div>`;
     }).join('')}
   </div>
-  ${sel?renderCourse(sel):''}`;
+  ${sel?renderCourse(sel):''}
+  <div class="vw-head" style="margin-top:46px"><h2>The Reading Room</h2><p>Long-form writing from across the herd — official briefings from the RWA Foundation, community dispatches from WALLY DAO, and sharp takes from Zeus.</p></div>
+  <div id="learnArt"></div>`;
+  renderLearnArticles();
 }
 function renderCourse(c){
   const passed=S.quizDone.has(c.id);
@@ -2869,7 +3020,7 @@ addEventListener('keydown',e=>{
 
 /* ---------- page router (home / foundation) ---------- */
 function showPage(p, anchor){
-  ['home','foundation','eco'].forEach(k=>{ const el=$('#page-'+k); if(el) el.hidden = k!==p; });
+  ['home','foundation','eco','articles'].forEach(k=>{ const el=$('#page-'+k); if(el) el.hidden = k!==p; });
   $('#fdnLink').classList.toggle('on', p==='foundation');
   $('#landing').classList.toggle('eco-mode', p==='eco');
   $('#mmenu').classList.remove('open');
@@ -2896,6 +3047,183 @@ function startHerdLive(){
     el.textContent = n.toLocaleString('en-US');
   }, 8000 + Math.random()*5000);
 }
+
+/* ============================================================
+   ARTICLE HUB · "The Reading Room" — public, guest-friendly
+   ------------------------------------------------------------
+   The entries below mirror the long-form "Articles" feeds of the
+   three X accounts. They are representative briefings written in
+   each account's voice — the full pieces live on X (links below).
+   To wire live data, swap the arrays in ARTICLES; keep the shape
+   {cat,tag,title,excerpt,date,read,feat?} and the source `url`.
+   cat maps to a tag colour: org / grn / gld / vio.
+============================================================ */
+const X_ICON = '<svg viewBox="0 0 24 24"><path d="M4 4l7.2 9.3L4.4 20h2.6l5.4-5.4L16.8 20H20l-7.5-9.7L18.9 4h-2.6l-4.8 4.9L7.2 4z"/></svg>';
+
+const ART_SOURCES = {
+  foundation:{ tab:'RWA Foundation', name:'RWA Foundation', handle:'@RWAFoundation_', mark:'🐘', sub:'OFFICIAL', tagc:'org',
+    bio:'Official news, initiatives and research from the RWA Foundation — the dedicated association for the tokenized-assets industry and steward of WALLY DAO.',
+    url:'https://x.com/RWAFoundation_/articles' },
+  wally:{ tab:'WALLY DAO', name:'WALLY DAO', handle:'@WALLY_DAO', mark:'🐘', sub:'THE HERD', tagc:'grn',
+    bio:'Dispatches from the DAO itself — governance, the $WALLY token, the yield-bearing on-chain treasury, member perks, and everything happening at the watering hole.',
+    url:'https://x.com/WALLY_DAO/articles' },
+  zeus:{ tab:"Zeus' Corner", name:"Zeus' Corner", handle:'@ZeusRWA', mark:'⚡', sub:'OPINION', tagc:'gld',
+    bio:'Your favourite titan of real-world assets. Sharp, opinionated long-reads on tokenization, stablecoins and RWAs eating the world — from the person running the Foundation.',
+    url:'https://x.com/ZeusRWA/articles' }
+};
+
+const ARTICLES = {
+  foundation:[
+    {cat:'org', tag:'Flagship report', feat:true,
+     title:'The State of Real-World Assets — Q2 2026',
+     excerpt:'Our quarterly read on the on-chain economy: ~$291B in stablecoins, $14B locked in RWA vaults, tokenized equities clearing nine figures a day, and where the next leg of growth is hiding. The numbers, in plain English.',
+     date:'Jun 9, 2026', read:'9 min'},
+    {cat:'org', tag:'Inside the Foundation',
+     title:'30+ Founding Members and the Standards They’re Building',
+     excerpt:'Issuers, marketplaces, infrastructure and TradFi under one roof. A look at the interoperability and disclosure standards our members are shipping so tokenized assets actually work together.',
+     date:'May 28, 2026', read:'6 min'},
+    {cat:'org', tag:'Member spotlight',
+     title:'How a Tokenization Platform Crossed $4B in Assets',
+     excerpt:'Treasuries, funds and credit, all on-chain. We sat down with one of our members to unpack what it took to scale past four billion — and what nearly broke along the way.',
+     date:'May 14, 2026', read:'5 min'},
+    {cat:'org', tag:'Community',
+     title:'The RWA Watering Hole: Why We Host Spaces Every Week',
+     excerpt:'Every Thursday the herd gathers for a live X Space with builders, issuers and researchers. The thinking behind the format, who’s on the panel, and how to get on the mic.',
+     date:'Apr 30, 2026', read:'4 min'},
+    {cat:'org', tag:'Mission',
+     title:'Trustworthy, Understood, Open: Why the Foundation Exists',
+     excerpt:'Most of the planet still banks on closed rails — or not at all. Our case for why tokenization is the path to financial services for everyone, and the role a neutral foundation plays.',
+     date:'Apr 16, 2026', read:'6 min'},
+    {cat:'org', tag:'Whitepaper',
+     title:'Reading the WALLY DAO Whitepaper: A Field Guide',
+     excerpt:'A chapter-by-chapter walk through the vision for decentralized capital markets, the $WALLY token economy, and how the DAO and the Foundation fit together. Easter egg included.',
+     date:'Apr 2, 2026', read:'7 min'}
+  ],
+  wally:[
+    {cat:'grn', tag:'Start here', feat:true,
+     title:'Welcome to the Herd: What WALLY DAO Actually Does',
+     excerpt:'WALLY is the elephant in the room of tokenized finance — the first community built to activate crypto natives in the RWA movement. Treasury, governance, perks, education and a whole lot of trumpeting. The full tour.',
+     date:'Jun 11, 2026', read:'6 min'},
+    {cat:'grn', tag:'Tokenomics',
+     title:'$WALLY Explained: Governance, Utility and the Treasury',
+     excerpt:'What the token actually does — voting power, ecosystem utility, and how a yield-bearing on-chain treasury funds the mission without selling your bags.',
+     date:'May 30, 2026', read:'7 min'},
+    {cat:'grn', tag:'How-to',
+     title:'Your First DAO Proposal in 5 Minutes',
+     excerpt:'From idea to on-chain vote. A friendly walkthrough of how governance works, what makes a proposal worth backing, and how the herd reaches a decision together.',
+     date:'May 18, 2026', read:'5 min'},
+    {cat:'grn', tag:'Events',
+     title:'WALLY Fest & the RWA Pod: The Community Calendar',
+     excerpt:'Festivals, podcasts, spaces and IRL meetups. Everything on the herd’s calendar this season and how to show up — online or in person.',
+     date:'May 6, 2026', read:'4 min'},
+    {cat:'grn', tag:'Rewards',
+     title:'Earn Your Stripes: WALLY Points, Drops & Perks',
+     excerpt:'Learn, contribute, get rewarded. How the points system works, what member perks unlock, and how drops reward the people who actually show up.',
+     date:'Apr 22, 2026', read:'5 min'},
+    {cat:'grn', tag:'Education',
+     title:'RWAs Without the Scary: Our 5-Minute Primer Series',
+     excerpt:'Finance without the jargon. A guide to the beginner series that takes you from “what is an RWA” to confidently navigating the space — in about the length of a coffee.',
+     date:'Apr 8, 2026', read:'4 min'}
+  ],
+  zeus:[
+    {cat:'gld', tag:'Pinned', feat:true,
+     title:'10 RWA Businesses Nobody Has Built Yet',
+     excerpt:'Every time I talk to founders I realise the same thing: RWAs are taking off, but everything around them is still a shambles. Billions in assets, duct-taped rails. Ten gaps someone is going to get filthy rich filling.',
+     date:'Jun 6, 2026', read:'8 min'},
+    {cat:'vio', tag:'Deep dive',
+     title:'Represented vs Distributed RWAs: Who Actually Wins?',
+     excerpt:'Represented assets sit near $360B; distributed ones closer to $25B. That gap tells you who moved first. Why each camp thinks the other is a scam — and why they’re both a little bit right.',
+     date:'May 26, 2026', read:'7 min'},
+    {cat:'vio', tag:'Opinion',
+     title:'The Hidden Costs of RWAs Nobody Puts on a Slide',
+     excerpt:'Custody. FX. Settlement. Liquidity. If the asset touches the real world, the real world sends you the bill. The fees nobody shows you, and how they quietly eat your yield.',
+     date:'May 12, 2026', read:'6 min'},
+    {cat:'vio', tag:'Markets',
+     title:'Tokenized Equities Just Crossed $1B — Now What?',
+     excerpt:'Apple, Tesla and Nvidia, living on a blockchain. Two issuers already control most of a sector that barely existed two years ago. Microscopic next to global equities — and exactly why it’s interesting.',
+     date:'Apr 28, 2026', read:'6 min'},
+    {cat:'vio', tag:'Weekly recap',
+     title:'GM Builders: This Week in Real-World Assets',
+     excerpt:'The Monday recap. Even the IMF is calling tokenization a structural shift now, tokenized real estate had a strong week, and a couple of launches you shouldn’t fade. All the news, one scroll.',
+     date:'Apr 14, 2026', read:'5 min'},
+    {cat:'vio', tag:'Thesis',
+     title:'Stablecoins Are the Trojan Horse for Tokenization',
+     excerpt:'Nearly $300B and climbing. Stablecoins quietly taught the world to hold dollars on-chain. Everything else — treasuries, credit, equities — walks through the door they opened.',
+     date:'Mar 31, 2026', read:'6 min'}
+  ]
+};
+
+const ART = { tab:'foundation', back:'home', learnTab:'foundation' };
+
+function openArticlesFrom(src){
+  if(src==='app'){ $('#app').hidden=true; $('#landing').hidden=false; }
+  ART.back = src;
+  showPage('articles');
+  renderArticles();
+}
+function articlesBack(){
+  if(ART.back==='app' && S.connected){ showPage('home'); $('#landing').hidden=true; $('#app').hidden=false; }
+  else showPage('home');
+}
+function artTab(k){ if(k===ART.tab) return; ART.tab=k; renderArticles(); }
+
+/* reusable builders — shared by the public Reading Room page and the in-dashboard version */
+function artTabsHTML(active, handler){
+  return Object.keys(ART_SOURCES).map(k=>{
+    const s=ART_SOURCES[k];
+    return `<button class="art-tab ${k===active?'on':''}" onclick="${handler}('${k}')"><b>${s.tab}</b><i>${s.handle}</i></button>`;
+  }).join('');
+}
+function artSourceHTML(tab){
+  const s = ART_SOURCES[tab];
+  return `<div class="art-source">
+    <div class="art-av">${s.mark}</div>
+    <div class="art-si">
+      <div class="nm">${s.name}<span class="tag ${s.tagc}">${s.sub}</span></div>
+      <div class="hd">${s.handle}</div>
+      <p>${s.bio}</p>
+    </div>
+    <a class="btn btn-dark btn-sm art-follow" href="${s.url}" target="_blank" rel="noopener">${X_ICON} All articles on X</a>
+  </div>`;
+}
+function artListHTML(tab){
+  const s = ART_SOURCES[tab];
+  const items = ARTICLES[tab];
+  return `<div class="art-grid">` + items.map((a,i)=>{
+    if(a.feat){
+      return `<a class="art-card lead" href="${s.url}" target="_blank" rel="noopener" style="animation-delay:${i*55}ms">
+        <div class="art-lead-vis"><span class="alv-k">Featured read</span><span class="alv-n">01</span><span class="alv-m">${s.mark}</span></div>
+        <div class="art-lead-body">
+          <div class="ac-kick"><span class="tag ${a.cat}">${a.tag}</span></div>
+          <h4>${a.title}</h4>
+          <p>${a.excerpt}</p>
+          <div class="art-meta"><span>${a.date}</span><i class="dot"></i><span>${a.read} read</span><span class="art-read">Read on X ${X_ICON}</span></div>
+        </div>
+      </a>`;
+    }
+    return `<a class="art-card" href="${s.url}" target="_blank" rel="noopener" style="animation-delay:${i*55}ms">
+      <div class="ac-kick"><span class="ac-num">0${i+1}</span><span class="tag ${a.cat}">${a.tag}</span></div>
+      <h4>${a.title}</h4>
+      <p>${a.excerpt}</p>
+      <div class="art-meta"><span>${a.date}</span><i class="dot"></i><span>${a.read} read</span><span class="art-read">Read on X <span class="arr">→</span></span></div>
+    </a>`;
+  }).join('') + `</div>`;
+}
+
+function renderArticles(){
+  $('#artBackLbl').textContent = (ART.back==='app' && S.connected) ? 'Back to dashboard' : 'Back to home';
+  $('#artTabs').innerHTML = artTabsHTML(ART.tab, 'artTab');
+  $('#artSource').innerHTML = artSourceHTML(ART.tab);
+  $('#artList').innerHTML = artListHTML(ART.tab);
+}
+
+/* in-dashboard Reading Room (rendered inside the Learn view) */
+function renderLearnArticles(){
+  const wrap = $('#learnArt');
+  if(!wrap) return;
+  wrap.innerHTML = `<div class="art-tabs">${artTabsHTML(ART.learnTab, 'artTabLearn')}</div>${artSourceHTML(ART.learnTab)}${artListHTML(ART.learnTab)}`;
+}
+function artTabLearn(k){ if(k===ART.learnTab) return; ART.learnTab=k; renderLearnArticles(); }
 
 /* ---------- boot ---------- */
 syncPoints();
