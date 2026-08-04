@@ -21,6 +21,7 @@ import {
   isExchangeOpen,
   isExchangeRevealEligible,
   loadGameState,
+  markGameCompletionMessageSeen,
   markNeighborhoodCelebrated,
   markNeighborhoodExplored,
   markWorldTokenCollected,
@@ -1006,8 +1007,10 @@ export default function WallyWorldGame() {
   const [restartConfirm, setRestartConfirm] = useState(false);
   const [exchangePanel, setExchangePanel] = useState<ExchangePanelSnapshot | null>(null);
   const [landOffer, setLandOffer] = useState<LandOfferSnapshot | null>(null);
+  const [completionMessageVisible, setCompletionMessageVisible] = useState(false);
   const purchaseExchangeRef = useRef<(assetId: ExchangeAssetId) => void>(() => undefined);
   const purchaseLandRef = useRef<(assetId: AssetId) => void>(() => undefined);
+  const dismissCompletionRef = useRef<() => void>(() => undefined);
   const exchangeDismissedRef = useRef(false);
 
   useEffect(() => {
@@ -1035,6 +1038,8 @@ export default function WallyWorldGame() {
     let lastExchangePanelUpdate = 0;
     let exchangeAutoOpenUntil = 0;
     let activeLandOfferKey = "";
+    let completionMessageQueued = false;
+    let completionMessageOpen = false;
     const keys = new Set<string>();
     const tapTarget: { value: XY | null } = { value: null };
     const trail: Array<XY & { born: number }> = [];
@@ -2615,12 +2620,23 @@ export default function WallyWorldGame() {
       setExchangePanel(exchangeSnapshot(stateRef.current));
     };
 
+    dismissCompletionRef.current = () => {
+      stateRef.current = saveGameState(markGameCompletionMessageSeen(stateRef.current));
+      state = stateRef.current;
+      completionMessageQueued = true;
+      completionMessageOpen = false;
+      pausedRef.current = false;
+      setCompletionMessageVisible(false);
+      setPaused(false);
+    };
+
     const onKeyDown = (event: KeyboardEvent) => {
       const key = event.key.toLowerCase();
       if (["w", "a", "s", "d", "arrowup", "arrowdown", "arrowleft", "arrowright", "escape"].includes(key)) {
         event.preventDefault();
       }
       initializeSound();
+      if (completionMessageOpen) return;
       if (key === "escape") {
         setPaused((value) => !value);
         return;
@@ -3640,6 +3656,26 @@ export default function WallyWorldGame() {
           }
         }
 
+        const gameIsComplete = stateRef.current.completedAssetIds.length >= GAME_ASSETS.length
+          && stateRef.current.town.reserveCollectedIds.length >= RESERVE_TOKEN_COUNT;
+        if (
+          gameIsComplete
+          && !stateRef.current.town.completionMessageSeen
+          && !completionMessageQueued
+        ) {
+          completionMessageQueued = true;
+          completionMessageOpen = true;
+          pausedRef.current = true;
+          setExchangePanel(null);
+          setLandOffer(null);
+          setCompletionMessageVisible(true);
+          setPaused(true);
+          playNote(523.25, 0.72, 0.04);
+          playNote(659.25, 0.82, 0.035, 0.12);
+          playNote(783.99, 1.05, 0.03, 0.24);
+          if (navigator.vibrate) navigator.vibrate([18, 45, 24, 45, 32]);
+        }
+
         if (now >= nextAmbientBirdAt && birds.length === 0) {
           const guidanceTarget = findActiveBirdGuidanceTarget(unlockedSet);
           ambientBirdSequence += 1;
@@ -3892,7 +3928,27 @@ export default function WallyWorldGame() {
         </div>
       )}
 
-      {paused && (
+      {completionMessageVisible && (
+        <div
+          className="wally-completion-layer"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="wally-completion-title"
+          aria-describedby="wally-completion-copy"
+        >
+          <div className="wally-completion-card">
+            <span className="wally-completion-glow" aria-hidden="true" />
+            <p className="wally-completion-kicker">100% complete</p>
+            <h1 id="wally-completion-title">Congratulations, you&apos;ve brought the world onchain.</h1>
+            <p id="wally-completion-copy">
+              You&apos;re a hero to the herd and humanity. You now have more blessings and good karma throughout your life.
+            </p>
+            <button type="button" onClick={() => dismissCompletionRef.current()}>Trunks up!</button>
+          </div>
+        </div>
+      )}
+
+      {paused && !completionMessageVisible && (
         <div className="wally-pause-layer" role="dialog" aria-modal="true" aria-label="WALLY WORLD paused">
           <div className="wally-pause-card">
             <h1>WALLY WORLD</h1>

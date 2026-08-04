@@ -72,6 +72,8 @@ export interface TownState {
   readonly exploredNeighborhoodKeys: readonly string[];
   /** Completed neighborhoods whose first-return celebration has already played. */
   readonly celebratedNeighborhoodIds: readonly number[];
+  /** Prevents the 100% completion message from interrupting the same town twice. */
+  readonly completionMessageSeen: boolean;
   readonly developmentLevel: number;
 }
 
@@ -402,6 +404,7 @@ export function createInitialGameState(
       reserveCollectedIds: [],
       exploredNeighborhoodKeys: ["0:0"],
       celebratedNeighborhoodIds: [],
+      completionMessageSeen: false,
       developmentLevel: 0,
     },
     totalPlaySeconds: 0,
@@ -599,6 +602,7 @@ export function normalizeGameState(rawValue: unknown, now = Date.now()): GameSta
       reserveCollectedIds: uniqueReserveIds(rawTown?.reserveCollectedIds),
       exploredNeighborhoodKeys: uniqueStrings(rawTown?.exploredNeighborhoodKeys),
       celebratedNeighborhoodIds: uniqueNeighborhoodIds(rawTown?.celebratedNeighborhoodIds),
+      completionMessageSeen: rawTown?.completionMessageSeen === true,
       developmentLevel: Math.min(8, Math.floor(completedAssetIds.length / 10)),
     },
     totalPlaySeconds: nonNegative(raw.totalPlaySeconds),
@@ -990,6 +994,17 @@ export function markNeighborhoodCelebrated(state: GameState, neighborhoodId: num
     town: {
       ...state.town,
       celebratedNeighborhoodIds: [...state.town.celebratedNeighborhoodIds, id],
+    },
+  };
+}
+
+export function markGameCompletionMessageSeen(state: GameState): GameState {
+  if (state.town.completionMessageSeen) return state;
+  return {
+    ...state,
+    town: {
+      ...state.town,
+      completionMessageSeen: true,
     },
   };
 }
