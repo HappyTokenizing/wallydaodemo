@@ -19,17 +19,20 @@ export type NeighborhoodDefinition = Readonly<{
   palette: readonly [string, string, string];
 }>;
 
+/** Every district uses the same landscape sign silhouette for clear sightlines. */
+export const HORIZONTAL_SIGN_ASPECT = 1672 / 941;
+
 export const NEIGHBORHOODS: readonly NeighborhoodDefinition[] = [
-  { id: 0, packId: "01_feast_street", name: "WALLY WORLD", sign: "WALLY WORLD", signFolder: "10_wally_world", signAspect: 941 / 1672, center: { x: 0, y: 4 }, map: { x: 0, y: 0 }, palette: ["#d97b62", "#e9bd62", "#739b7e"] },
-  { id: 1, packId: "02_homeward_gardens", name: "Tokenize N’ Chill", sign: "Tokenize N’ Chill", signFolder: "01_tokenize_n_chill", signAspect: 1672 / 941, center: { x: -47, y: 5 }, map: { x: -1, y: 0 }, palette: ["#7b9db0", "#d9a775", "#8aa17a"] },
-  { id: 2, packId: "03_japan_quarter", name: "Relax, we're moving onchain", sign: "Relax, we're moving onchain", signFolder: "02_relax_were_moving_onchain", signAspect: 941 / 1672, center: { x: 47, y: 4 }, map: { x: 1, y: 0 }, palette: ["#c96f63", "#5f8b88", "#e6c480"] },
-  { id: 3, packId: "04_ledger_square", name: "COMING FOR WALL ST", sign: "COMING FOR WALL ST", signFolder: "03_coming_for_wall_st", signAspect: 1672 / 941, center: { x: -50, y: 53 }, map: { x: -1, y: 1 }, palette: ["#496a91", "#d8b46e", "#6c8a78"] },
-  { id: 4, packId: "05_ubuntu_gardens", name: "Crypto Meets the World", sign: "Crypto Meets the World", signFolder: "04_crypto_meets_the_world", signAspect: 1536 / 1024, center: { x: 0, y: 56 }, map: { x: 0, y: 1 }, palette: ["#c57a4f", "#6e9b72", "#e0b65f"] },
-  { id: 5, packId: "06_mountain_heights", name: "TokenizeThis", sign: "TokenizeThis", signFolder: "05_tokenizethis", signAspect: 1672 / 941, center: { x: 50, y: 52 }, map: { x: 1, y: 1 }, palette: ["#668aa1", "#88a184", "#d9b77b"] },
-  { id: 6, packId: "07_lantern_arts", name: "Zeus' RWA Lounge", sign: "Zeus' RWA Lounge", signFolder: "06_zeus_rwa_lounge", signAspect: 1672 / 941, center: { x: -51, y: -48 }, map: { x: -1, y: -1 }, palette: ["#9b7093", "#d77c62", "#e1b965"] },
-  { id: 7, packId: "08_green_commons", name: "Prosperity for All", sign: "Prosperity for All", signFolder: "07_prosperity_for_all", signAspect: 1672 / 941, center: { x: 0, y: -51 }, map: { x: 0, y: -1 }, palette: ["#6f9b76", "#90b1a0", "#e1be6f"] },
-  { id: 8, packId: "09_latin_plaza", name: "YOU MADE IT THIS FAR", sign: "YOU MADE IT THIS FAR", signFolder: "08_you_made_it_this_far", signAspect: 941 / 1672, center: { x: 51, y: -47 }, map: { x: 1, y: -1 }, palette: ["#d46e5e", "#e4a94f", "#62a19a"] },
-  { id: 9, packId: "10_tropical_harbor", name: "Happy Tokenizing", sign: "Happy Tokenizing", signFolder: "09_happy_tokenizing", signAspect: 1672 / 941, center: { x: 0, y: -100 }, map: { x: 0, y: -2 }, palette: ["#4f9c9b", "#e3b55e", "#cf7964"] },
+  { id: 0, packId: "01_feast_street", name: "WALLY WORLD", sign: "WALLY WORLD", signFolder: "10_wally_world", signAspect: HORIZONTAL_SIGN_ASPECT, center: { x: 0, y: 4 }, map: { x: 0, y: 0 }, palette: ["#d97b62", "#e9bd62", "#739b7e"] },
+  { id: 1, packId: "02_homeward_gardens", name: "Tokenize N’ Chill", sign: "Tokenize N’ Chill", signFolder: "01_tokenize_n_chill", signAspect: HORIZONTAL_SIGN_ASPECT, center: { x: -47, y: 5 }, map: { x: -1, y: 0 }, palette: ["#7b9db0", "#d9a775", "#8aa17a"] },
+  { id: 2, packId: "03_japan_quarter", name: "Relax, we're moving onchain", sign: "Relax, we're moving onchain", signFolder: "02_relax_were_moving_onchain", signAspect: HORIZONTAL_SIGN_ASPECT, center: { x: 47, y: 4 }, map: { x: 1, y: 0 }, palette: ["#c96f63", "#5f8b88", "#e6c480"] },
+  { id: 3, packId: "04_ledger_square", name: "COMING FOR WALL ST", sign: "COMING FOR WALL ST", signFolder: "03_coming_for_wall_st", signAspect: HORIZONTAL_SIGN_ASPECT, center: { x: -50, y: 53 }, map: { x: -1, y: 1 }, palette: ["#496a91", "#d8b46e", "#6c8a78"] },
+  { id: 4, packId: "05_ubuntu_gardens", name: "Crypto Meets the World", sign: "Crypto Meets the World", signFolder: "04_crypto_meets_the_world", signAspect: HORIZONTAL_SIGN_ASPECT, center: { x: 0, y: 56 }, map: { x: 0, y: 1 }, palette: ["#c57a4f", "#6e9b72", "#e0b65f"] },
+  { id: 5, packId: "06_mountain_heights", name: "TokenizeThis", sign: "TokenizeThis", signFolder: "05_tokenizethis", signAspect: HORIZONTAL_SIGN_ASPECT, center: { x: 50, y: 52 }, map: { x: 1, y: 1 }, palette: ["#668aa1", "#88a184", "#d9b77b"] },
+  { id: 6, packId: "07_lantern_arts", name: "Zeus' RWA Lounge", sign: "Zeus' RWA Lounge", signFolder: "06_zeus_rwa_lounge", signAspect: HORIZONTAL_SIGN_ASPECT, center: { x: -51, y: -48 }, map: { x: -1, y: -1 }, palette: ["#9b7093", "#d77c62", "#e1b965"] },
+  { id: 7, packId: "08_green_commons", name: "Prosperity for All", sign: "Prosperity for All", signFolder: "07_prosperity_for_all", signAspect: HORIZONTAL_SIGN_ASPECT, center: { x: 0, y: -51 }, map: { x: 0, y: -1 }, palette: ["#6f9b76", "#90b1a0", "#e1be6f"] },
+  { id: 8, packId: "09_latin_plaza", name: "YOU MADE IT THIS FAR", sign: "YOU MADE IT THIS FAR", signFolder: "08_you_made_it_this_far", signAspect: HORIZONTAL_SIGN_ASPECT, center: { x: 51, y: -47 }, map: { x: 1, y: -1 }, palette: ["#d46e5e", "#e4a94f", "#62a19a"] },
+  { id: 9, packId: "10_tropical_harbor", name: "Happy Tokenizing", sign: "Happy Tokenizing", signFolder: "09_happy_tokenizing", signAspect: HORIZONTAL_SIGN_ASPECT, center: { x: 0, y: -100 }, map: { x: 0, y: -2 }, palette: ["#4f9c9b", "#e3b55e", "#cf7964"] },
 ] as const;
 
 export const UNLOCK_WAVES: readonly (readonly NeighborhoodId[])[] = [

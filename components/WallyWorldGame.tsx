@@ -210,6 +210,7 @@ type AudioEngine = {
   beat: number;
   timer: number;
   theme: number;
+  started: boolean;
 };
 
 type ExchangePanelSnapshot = {
@@ -926,7 +927,7 @@ function projectPosition(neighborhood: number, slot: number, total: number, inde
 }
 
 function neighborhoodSignDimensions(neighborhood: (typeof NEIGHBORHOODS)[number]) {
-  const width = neighborhood.signAspect < 0.8 ? 4.6 : 7.6;
+  const width = 7.6;
   return { width, height: width / neighborhood.signAspect };
 }
 
@@ -2037,7 +2038,7 @@ export default function WallyWorldGame() {
     };
 
     const scheduleLofiStep = () => {
-      if (!audio || pausedRef.current || !soundRef.current) return;
+      if (!audio || audio.context.state !== "running" || pausedRef.current || !soundRef.current) return;
       const absoluteBeat = audio.beat++;
       const step = absoluteBeat % 16;
       // Each scene is a full 16-bar miniature, giving the town eight distinct
@@ -2065,9 +2066,35 @@ export default function WallyWorldGame() {
       if (melody > 0) playLofiTone(melody, 0.42, 0.017, 0.015 + swing, "triangle", 1880);
     };
 
+    const startLofiStation = () => {
+      if (disposed || !audio || audio.started || audio.context.state !== "running") return;
+      audio.started = true;
+      scheduleLofiStep();
+      audio.timer = window.setInterval(scheduleLofiStep, LOFI_STATION_STEP_MS);
+    };
+
+    const unlockAudioContext = (context: AudioContext) => {
+      // iOS Safari requires both resume() and an actual source start inside the
+      // original touch gesture before it will release Web Audio to the speakers.
+      try {
+        const resumePromise = context.state === "running" ? null : context.resume();
+        const silentBuffer = context.createBuffer(1, 1, context.sampleRate);
+        const silentSource = context.createBufferSource();
+        const silentGain = context.createGain();
+        silentGain.gain.value = 0;
+        silentSource.buffer = silentBuffer;
+        silentSource.connect(silentGain).connect(context.destination);
+        silentSource.start(0);
+        if (context.state === "running") startLofiStation();
+        else void resumePromise?.then(startLofiStation).catch(() => undefined);
+      } catch {
+        // A later touch retries the unlock if the browser is not ready yet.
+      }
+    };
+
     const initializeSound = () => {
       if (audio) {
-        void audio.context.resume();
+        unlockAudioContext(audio.context);
         return;
       }
       try {
@@ -2083,10 +2110,8 @@ export default function WallyWorldGame() {
         compressor.attack.value = 0.025;
         compressor.release.value = 0.28;
         gain.connect(compressor).connect(context.destination);
-        audio = { context, gain, beat: 0, timer: 0, theme: stateRef.current.town.worldSeed % LOFI_THEMES.length };
-        void context.resume();
-        scheduleLofiStep();
-        audio.timer = window.setInterval(scheduleLofiStep, LOFI_STATION_STEP_MS);
+        audio = { context, gain, beat: 0, timer: 0, theme: stateRef.current.town.worldSeed % LOFI_THEMES.length, started: false };
+        unlockAudioContext(context);
       } catch {
         audio = null;
       }
@@ -2663,6 +2688,7 @@ export default function WallyWorldGame() {
     window.addEventListener("keydown", onKeyDown, { passive: false });
     window.addEventListener("keyup", onKeyUp);
     window.addEventListener("resize", resize);
+    window.addEventListener("touchend", initializeSound, { passive: true });
     renderer.domElement.addEventListener("pointerdown", onCanvasPointerDown);
     renderer.domElement.addEventListener("pointermove", onCanvasPointerMove);
     renderer.domElement.addEventListener("pointerup", onCanvasPointerEnd);
@@ -3728,6 +3754,7 @@ export default function WallyWorldGame() {
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("touchend", initializeSound);
       renderer.domElement.removeEventListener("pointerdown", onCanvasPointerDown);
       renderer.domElement.removeEventListener("pointermove", onCanvasPointerMove);
       renderer.domElement.removeEventListener("pointerup", onCanvasPointerEnd);

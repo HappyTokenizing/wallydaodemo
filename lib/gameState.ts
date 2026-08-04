@@ -375,9 +375,9 @@ export function createInitialGameState(
 
   return {
     version: GAME_STATE_VERSION,
-    // A new world opens with Wally in the middle of the starter neighborhood,
-    // facing its already-visible WALLY WORLD welcome sign.
-    wallyPosition: { x: 0, z: 4, facing: "n" },
+    // Begin just south of the centered welcome sign so Wally is fully visible
+    // while still facing the landmark at the heart of the starter district.
+    wallyPosition: { x: 0, z: 0, facing: "n" },
     assetProgress: {},
     completedAssetIds: [],
     completedAt: {},
@@ -529,6 +529,11 @@ export function normalizeGameState(rawValue: unknown, now = Date.now()): GameSta
   const facing = typeof facingCandidate === "string" && FACING_DIRECTIONS.has(facingCandidate as FacingDirection)
     ? (facingCandidate as FacingDirection)
     : fresh.wallyPosition.facing;
+  const rawX = finiteOr(rawPosition?.x, fresh.wallyPosition.x);
+  const rawZ = finiteOr(rawPosition?.z, fresh.wallyPosition.z);
+  // Repair saves created at the former spawn, which occupied the exact center
+  // of the WALLY WORLD sign and could hide the player on both desktop and mobile.
+  const isLegacyObscuredSpawn = Math.abs(rawX) < 0.5 && Math.abs(rawZ - 4) < 0.5;
   const worldSeed = Math.floor(nonNegative(rawTown?.worldSeed, fresh.town.worldSeed)) >>> 0;
   const discovered = uniqueAssetIds(rawTown?.discoveredAssetIds);
   const ownedPlotAssetIds = uniqueAssetIds(rawTown?.ownedPlotAssetIds);
@@ -562,8 +567,8 @@ export function normalizeGameState(rawValue: unknown, now = Date.now()): GameSta
   return {
     version: GAME_STATE_VERSION,
     wallyPosition: {
-      x: finiteOr(rawPosition?.x, fresh.wallyPosition.x),
-      z: finiteOr(rawPosition?.z, fresh.wallyPosition.z),
+      x: isLegacyObscuredSpawn ? fresh.wallyPosition.x : rawX,
+      z: isLegacyObscuredSpawn ? fresh.wallyPosition.z : rawZ,
       facing,
     },
     assetProgress: progress,
@@ -671,6 +676,7 @@ export function getPassiveBudgetPerMinute(state: GameState): number {
 
 function getNeighborhoodBudgetRates(state: GameState): number[] {
   const productionSpeedMultiplier = 1.15;
+  const starterNeighborhoodMultiplier = 1.2;
   const rawIncome = Array.from({ length: NEIGHBORHOOD_COUNT }, () => 0);
   for (const assetId of state.completedAssetIds) {
     rawIncome[getNeighborhoodIndexForAsset(assetId)] += ASSETS_BY_ID[assetId].passiveBudgetPerMinute;
@@ -683,7 +689,8 @@ function getNeighborhoodBudgetRates(state: GameState): number[] {
     const baseRate = income <= 4
       ? income * 2.25
       : Math.min(36, 9 + Math.sqrt(income - 4) * 1.65);
-    return baseRate * productionSpeedMultiplier;
+    const neighborhoodMultiplier = neighborhood === 0 ? starterNeighborhoodMultiplier : 1;
+    return baseRate * productionSpeedMultiplier * neighborhoodMultiplier;
   });
 }
 
