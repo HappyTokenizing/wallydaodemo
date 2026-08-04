@@ -9,7 +9,7 @@ import { getGlobalAssetForGameAssetId } from "./globalAssets";
 export const NEIGHBORHOOD_COUNT = 10;
 export const FINANCE_NEIGHBORHOOD_INDEX = 3;
 
-const NEIGHBORHOOD_LAND_BASE = [3, 5, 7, 9, 12, 15, 18, 22, 27, 33] as const;
+const NEIGHBORHOOD_LAND_BASE = [1, 3, 5, 7, 10, 13, 16, 20, 25, 31] as const;
 
 export function getNeighborhoodIndexForAsset(assetId: AssetId): number {
   const packNumber = getGlobalAssetForGameAssetId(assetId).packNumber;
@@ -19,7 +19,14 @@ export function getNeighborhoodIndexForAsset(assetId: AssetId): number {
 export function getLandPlotPrice(neighborhood: number, slot: number): number {
   const normalizedNeighborhood = Math.max(0, Math.min(NEIGHBORHOOD_COUNT - 1, Math.floor(neighborhood)));
   const base = NEIGHBORHOOD_LAND_BASE[normalizedNeighborhood] ?? NEIGHBORHOOD_LAND_BASE.at(-1)!;
-  return base + Math.max(0, Math.floor(slot) - 1) * 2;
+  const normalizedSlot = Math.max(0, Math.floor(slot));
+  // The starter asset is granted. Its next plots cost $1, $3, $5, and so on.
+  // Later neighborhoods continue the same gentle two-dollar step from their
+  // progressively higher district base.
+  const purchasableSlot = normalizedNeighborhood === 0
+    ? Math.max(0, normalizedSlot - 1)
+    : normalizedSlot;
+  return base + purchasableSlot * 2;
 }
 
 function getNeighborhoodLandCost(neighborhood: number): number {

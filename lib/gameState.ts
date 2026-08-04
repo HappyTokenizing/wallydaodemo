@@ -670,6 +670,7 @@ export function getPassiveBudgetPerMinute(state: GameState): number {
 }
 
 function getNeighborhoodBudgetRates(state: GameState): number[] {
+  const productionSpeedMultiplier = 1.15;
   const rawIncome = Array.from({ length: NEIGHBORHOOD_COUNT }, () => 0);
   for (const assetId of state.completedAssetIds) {
     rawIncome[getNeighborhoodIndexForAsset(assetId)] += ASSETS_BY_ID[assetId].passiveBudgetPerMinute;
@@ -677,10 +678,12 @@ function getNeighborhoodBudgetRates(state: GameState): number[] {
   return rawIncome.map((income, neighborhood) => {
     const produced = state.town.neighborhoodBudgetProduced[neighborhood] ?? 0;
     if (income <= 0 || produced >= getNeighborhoodCoinCap(neighborhood)) return 0;
-    // The first working asset now funds the opening $3 plot in about twenty
-    // seconds, while the soft curve keeps mature districts pleasantly paced.
-    if (income <= 4) return income * 2.25;
-    return Math.min(36, 9 + Math.sqrt(income - 4) * 1.65);
+    // Apply the same 15% lift to active and offline production while retaining
+    // the soft curve and finite neighborhood treasury.
+    const baseRate = income <= 4
+      ? income * 2.25
+      : Math.min(36, 9 + Math.sqrt(income - 4) * 1.65);
+    return baseRate * productionSpeedMultiplier;
   });
 }
 

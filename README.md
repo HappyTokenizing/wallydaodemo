@@ -1,4 +1,4 @@
-# WALLY WORLD
+# WALLY WORLD — Vercel Edition
 
 A peaceful, mobile-first town-building adventure rendered as a hand-painted 2D world with Three.js.
 
@@ -21,12 +21,31 @@ Wally wanders through a calm crowd, discovers tokenized projects, and watches a 
 - Passive budget generation and modest offline accrual
 - Portrait-mobile, landscape, and desktop layouts
 
-## Development
+## Deploy to Vercel
+
+1. Create a new Vercel project and import this folder from GitHub, GitLab, or
+   Bitbucket, or upload it with the Vercel CLI.
+2. Leave the framework preset as **Next.js**.
+3. Leave the build command as `npm run build`.
+4. Leave the output directory blank; Vercel handles the Next.js output.
+5. Deploy.
+
+No database, API keys, server-side accounts, or storage services are required.
+Player progress is stored in each player's browser.
+
+For canonical social links, optionally set:
+
+```text
+NEXT_PUBLIC_SITE_URL=https://your-domain.example
+```
+
+## Local development
 
 ```bash
-npm install
+npm ci
 npm run dev
 npm run build
 ```
 
-The supplied Wally sunglasses texture under `public/assets` is treated as an immutable character layer.
+Use Node.js 22.13 or newer. The supplied Wally art under `public/assets` is
+treated as an immutable character layer.

@@ -1056,7 +1056,7 @@ export default function WallyWorldGame() {
     const revealedNeighborhoods = new Set<number>(lastUnlockedNeighborhoodIds);
     const celebrationWindows = new Map<number, { until: number; nextBurst: number }>();
     let ambientBirdSequence = 0;
-    let nextAmbientBirdAt = performance.now() + 28_000 + (state.town.worldSeed % 12_000);
+    let nextAmbientBirdAt = performance.now() + 8_000 + (state.town.worldSeed % 5_000);
     let audio: AudioEngine | null = null;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: "high-performance" });
@@ -2211,8 +2211,8 @@ export default function WallyWorldGame() {
         },
         now,
         kind === "celebration"
-          ? { count: 11, baseScale: 1.14, duration: 3450, arc: 2.35, maxOpacity: 0.98 }
-          : { count: 3, baseScale: 0.78, duration: 3200, arc: 1.25, maxOpacity: 0.86 },
+          ? { count: 13, baseScale: 1.5, duration: 3650, arc: 2.55, maxOpacity: 1 }
+          : { count: 5, baseScale: 1.32, duration: 3500, arc: 1.5, maxOpacity: 0.95 },
       );
     };
 
@@ -3619,10 +3619,10 @@ export default function WallyWorldGame() {
           ambientBirdSequence += 1;
           if (guidanceTarget) {
             createScreenCrossingFlock(guidanceTarget, now, "guidance");
-            nextAmbientBirdAt = now + 38_000
-              + ((stateRef.current.town.worldSeed + ambientBirdSequence * 7919) % 18_000);
+            nextAmbientBirdAt = now + 15_000
+              + ((stateRef.current.town.worldSeed + ambientBirdSequence * 7919) % 9_000);
           } else {
-            nextAmbientBirdAt = now + 12_000;
+            nextAmbientBirdAt = now + 6_000;
           }
         }
 
