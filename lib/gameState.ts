@@ -18,6 +18,7 @@ export const AUTOSAVE_INTERVAL_MS = 3_000;
 export const OFFLINE_ACCRUAL_CAP_MS = 6 * 60 * 60 * 1_000;
 export const OFFLINE_ACCRUAL_EFFICIENCY = 0.22;
 export const OFFLINE_ACCRUAL_BUDGET_CAP = 600;
+export const ASSET_COMPLETION_REWARD = 1;
 const COOKIE_SAVE_PREFIX = "wally_world_checkpoint_v4";
 const COOKIE_CHUNK_SIZE = 2_800;
 const COOKIE_MAX_CHUNKS = 12;
@@ -836,6 +837,10 @@ function applyPiece(state: GameState, assetId: AssetId, now: number): AssetPiece
     assetProgress,
     completedAssetIds,
     completedAt,
+    budget: completed ? roundBudget(state.budget + ASSET_COMPLETION_REWARD) : state.budget,
+    lifetimeBudgetEarned: completed
+      ? roundBudget(state.lifetimeBudgetEarned + ASSET_COMPLETION_REWARD)
+      : state.lifetimeBudgetEarned,
     town: {
       ...state.town,
       discoveredAssetIds: addUnique(state.town.discoveredAssetIds, assetId),
@@ -905,7 +910,7 @@ export function purchaseExchangePiece(
   );
   const purchasedState: GameState = {
     ...pieceResult.state,
-    budget: roundBudget(state.budget - price),
+    budget: roundBudget(pieceResult.state.budget - price),
     exchangePurchases: { ...state.exchangePurchases, [assetId]: purchaseCount },
   };
   return {
