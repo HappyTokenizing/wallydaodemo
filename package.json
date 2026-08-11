@@ -1,33 +1,20 @@
 {
-  "name": "wally-world",
-  "version": "0.1.0",
+  "name": "wally-crypto-smackdown",
   "private": true,
-  "engines": {
-    "node": ">=22.13.0"
-  },
+  "version": "3.0.0",
+  "description": "WALLY: CRYPTO SMACKDOWN — a retro low-poly 3D crypto-parody arena fighter. 10 fighters, 10 arenas, ragdoll physics, procedural everything. It was not financial advice.",
+  "license": "MIT",
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build --webpack",
-    "start": "next start",
-    "lint": "eslint . --ignore-pattern .next",
-    "typecheck": "tsc --noEmit"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "next": "16.2.6",
-    "react": "19.2.6",
-    "react-dom": "19.2.6",
-    "three": "^0.185.1"
+    "three": "^0.166.1",
+    "cannon-es": "^0.20.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "4.2.1",
-    "@types/node": "22.19.19",
-    "@types/react": "19.2.14",
-    "@types/react-dom": "19.2.3",
-    "@types/three": "^0.185.3",
-    "eslint": "9.39.4",
-    "eslint-config-next": "16.2.6",
-    "tailwindcss": "4.2.1",
-    "typescript": "5.9.3"
-  },
-  "type": "module"
+    "vite": "^5.4.0"
+  }
 }
